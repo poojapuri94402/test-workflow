@@ -13,7 +13,7 @@ provider "azurerm" {
 
 variable "prefix" {
   type        = string
-  default     = "new"
+  default     = "wen"
   description = "description"
 }
 
@@ -76,11 +76,6 @@ resource "azurerm_service_plan" "app_service_plan" {
   sku_name            = "Y1"
 }
 
-# data "archive_file" "file_function_app" {
-#   type        = "zip"
-#   source_dir  = "../TriggerTask"
-#   output_path = "TriggerTask.zip"
-# }
 
 resource "azurerm_linux_function_app" "function_app" {
   depends_on = [azurerm_service_plan.app_service_plan]
@@ -104,7 +99,7 @@ resource "azurerm_linux_function_app" "function_app" {
     "blobstorageaccountsource_STORAGE" = azurerm_storage_account.source_storage.primary_connection_string,
     "blobstorageaccountdestination_STORAGE" = azurerm_storage_account.dest_storage.primary_connection_string,
     "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.ai.instrumentation_key,
-    "SCM_DO_BUILD_DURING_DEPLOYMENT"=true,
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"=true
     # "WEBSITE_RUN_FROM_PACKAGE" = 1
   }
 }
