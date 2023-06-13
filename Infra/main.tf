@@ -82,27 +82,29 @@ resource "azurerm_service_plan" "app_service_plan" {
 #   output_path = "TriggerTask.zip"
 # }
 
-# # resource "azurerm_linux_function_app" "function_app" {
-# #   depends_on = [azurerm_service_plan.app_service_plan]
+resource "azurerm_linux_function_app" "function_app" {
+  depends_on = [azurerm_service_plan.app_service_plan]
 
-# #   name                       = "${var.prefix}-func"
-# #   resource_group_name = azurerm_resource_group.rg.name
-# #   location            = azurerm_resource_group.rg.location
+  name                       = "${var.prefix}-func-main"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
 
-# #   storage_account_name       = azurerm_storage_account.source_storage.name
-# #   storage_account_access_key = azurerm_storage_account.source_storage.primary_access_key
-# #   service_plan_id            = azurerm_service_plan.app_service_plan.id
+  storage_account_name       = azurerm_storage_account.source_storage.name
+  storage_account_access_key = azurerm_storage_account.source_storage.primary_access_key
+  service_plan_id            = azurerm_service_plan.app_service_plan.id
+  # zip_deploy_file = data.archive_file.file_function_app.output_path
 
-# #    site_config {
-# #     application_stack {
-# #       python_version = "3.9"
-# #     }  
-# #   }
-# #   app_settings = {
-# #     "AzureWebJobsStorage" = azurerm_storage_account.source_storage.primary_connection_string,
-# #     "blobstorageaccountsource_STORAGE" = azurerm_storage_account.source_storage.primary_connection_string,
-# #     "blobstorageaccountdestination_STORAGE" = azurerm_storage_account.dest_storage.primary_connection_string,
-# #     "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.ai.instrumentation_key,
-# #     "zip_deploy_file" = data.archive_file.file_function_app.output_path
-# #   }
-# # }
+   site_config {
+    application_stack {
+      python_version = "3.10"
+    }  
+  }
+  app_settings = {
+    "AzureWebJobsStorage" = azurerm_storage_account.source_storage.primary_connection_string,
+    "blobstorageaccountsource_STORAGE" = azurerm_storage_account.source_storage.primary_connection_string,
+    "blobstorageaccountdestination_STORAGE" = azurerm_storage_account.dest_storage.primary_connection_string,
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.ai.instrumentation_key,
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"=true,
+    "WEBSITE_RUN_FROM_PACKAGE" = 1
+  }
+}
