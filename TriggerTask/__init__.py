@@ -48,6 +48,7 @@ def validate_files(employee_df, department_df):
         "invalid_email":"One/Multiple email id(s) are wrong in employee data",
         "invalid_phone_number":"One/Multiple phone number(s) are wrong in employee data"
     }
+    
     if employee_df.isnull().values.any():
         raise Exception(error_msgs.get("employee_empty_cell"))
     if department_df.isnull().values.any():
