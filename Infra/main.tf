@@ -104,7 +104,7 @@ resource "azurerm_linux_function_app" "function_app" {
     "blobstorageaccountsource_STORAGE" = azurerm_storage_account.source_storage.primary_connection_string,
     "blobstorageaccountdestination_STORAGE" = azurerm_storage_account.dest_storage.primary_connection_string,
     "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.ai.instrumentation_key,
-    # "SCM_DO_BUILD_DURING_DEPLOYMENT"=true,
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"=true,
     # "WEBSITE_RUN_FROM_PACKAGE" = 1
   }
 }
