@@ -1,0 +1,19 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "name": "myblob",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "demo-data",
+      "connection": "blobstorageaccountsource_STORAGE"
+    },
+    {
+      "name": "$return",
+      "type": "blob",
+      "path": "demo-data/new-data",
+      "connection": "blobstorageaccountdestination_STORAGE",
+      "direction": "out"
+    }
+  ]
+}
